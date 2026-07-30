@@ -2,7 +2,6 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <!-- 모바일 화면 비율 자동 맞춤 설정 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>펜션 예약 달력</title>
   <style>
@@ -83,8 +82,16 @@
       padding: 2px;
       overflow: hidden;
     }
+    
+    /* 지난 날짜 스타일 */
+    td.past-day {
+      background-color: #f1f3f5;
+      opacity: 0.6;
+    }
+    
     .date-num { font-weight: bold; margin-bottom: 2px; cursor: pointer; color: #333; font-size: 12px; text-align: center; background: #f8f9fa; border-radius: 3px; padding: 1px 0; }
     .date-num:hover { color: #339af0; }
+    .past-date-num { color: #adb5bd !important; cursor: default; }
     
     .room {
       margin-top: 2px;
@@ -100,6 +107,7 @@
     .available { background: #e6fcf5; border: 1px solid #b2f2bb; color: #2b8a3e; }
     .pending { background: #e7f5ff; border: 1px solid #a5d8ff; color: #1864ab; }
     .complete { background: #fff5f5; border: 1px solid #ffc9c9; color: #c92a2a; }
+    .disabled-room { background: #e9ecef; border: 1px solid #dee2e6; color: #adb5bd; }
     
     .btn {
       font-size: 9px;
@@ -149,7 +157,6 @@
     .btn-submit { background: #339af0; color: white; }
     .btn-close { background: #adb5bd; color: white; }
 
-    /* 화면 폭이 넓은 PC 환경용 조율 */
     @media (min-width: 600px) {
       body { padding: 20px; }
       .header-bar { flex-direction: row; justify-content: space-between; }
@@ -213,7 +220,6 @@
 
   <script>
     const rooms = ["강", "산", "들", "별"];
-    // 객실별 최대 정원 설정
     const roomCapacity = {
       "강": 5,
       "산": 5,
@@ -224,7 +230,10 @@
     const bookings = {};
     let isAdmin = false;
     
+    // 오늘 날짜 계산 (시/분/초 제외)
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
     const currentYear = today.getFullYear();
     const currentMonth = today.getMonth();
 
@@ -245,14 +254,16 @@
       }
     }
 
-    function showBookingList(date) {
-      const list = bookings[date];
+    function showBookingList(dateStr, isPast) {
+      if (isPast && !isAdmin) return; // 지난 날짜는 일반 사용자 클릭 불가능
+
+      const list = bookings[dateStr];
       if (!list || list.length === 0) {
-        alert(`${date}일에는 아직 예약 내역이 없습니다.`);
+        alert(`${dateStr}일에는 아직 예약 내역이 없습니다.`);
         return;
       }
       const details = list.map(b => `• ${b.room}호: ${b.name}님 (${b.count}명) [${b.status}]`).join("\n");
-      alert(`[${date} 예약 목록]\n${details}`);
+      alert(`[${dateStr} 예약 목록]\n${details}`);
     }
 
     function prevMonth() {
@@ -417,8 +428,14 @@
           if ((i === 0 && j < firstDay) || date > lastDate) {
             html += "<td></td>";
           } else {
+            const currentDateObj = new Date(year, month, date);
+            const isPast = currentDateObj < today; // 지난 날짜 여부 확인
             const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(date).padStart(2, "0")}`;
-            html += `<td><div class="date-num" onclick="showBookingList('${dateStr}')">${date}</div>`;
+
+            const tdClass = isPast ? 'class="past-day"' : '';
+            const numClass = isPast ? 'date-num past-date-num' : 'date-num';
+
+            html += `<td ${tdClass}><div class="${numClass}" onclick="showBookingList('${dateStr}', ${isPast})">${date}</div>`;
 
             rooms.forEach((room) => {
               const roomBooking = bookings[dateStr]?.find(b => b.room === room);
@@ -440,10 +457,27 @@
                 }
                 html += `</div>`;
               } else {
-                html += `<div class="room available">`;
-                html += `<span><b>${room}</b></span>`;
-                html += `<button class="btn reserve-btn" onclick="openModal('${dateStr}', '${room}')">예약</button>`;
-                html += `</div>`;
+                // 지난 날짜인 경우
+                if (isPast) {
+                  if (isAdmin) {
+                    // 관리자는 지난 날짜도 예약 가능
+                    html += `<div class="room available">`;
+                    html += `<span><b>${room}</b></span>`;
+                    html += `<button class="btn reserve-btn" onclick="openModal('${dateStr}', '${room}')">예약</button>`;
+                    html += `</div>`;
+                  } else {
+                    // 일반 사용자는 지난 날짜 비활성화
+                    html += `<div class="room disabled-room">`;
+                    html += `<span><b>${room}</b> 마감</span>`;
+                    html += `</div>`;
+                  }
+                } else {
+                  // 오늘 포함 이후 날짜
+                  html += `<div class="room available">`;
+                  html += `<span><b>${room}</b></span>`;
+                  html += `<button class="btn reserve-btn" onclick="openModal('${dateStr}', '${room}')">예약</button>`;
+                  html += `</div>`;
+                }
               }
             });
 
