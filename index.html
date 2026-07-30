@@ -1,5 +1,4 @@
-<script>
-  // 구글 앱스 스크립트 연동 주소가 성공적으로 입력되었습니다.
+<script> 
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw6vuSUuPucIsDXDwLZxMzTLSiCY2uI9Bq4LU6DRWDze1jfibAHUvJdyrcSaQq6x_VqPw/exec";
 </script>
 
@@ -14,36 +13,144 @@
     body { font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; padding: 10px; margin: 0; background-color: #f8f9fa; }
     .header-bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
     .legend { display: flex; gap: 6px; justify-content: flex-start; }
-    .legend span { display: inline-block; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; }
+    .legend span { 
+      display: inline-block; 
+      padding: 4px 8px; 
+      border-radius: 4px; 
+      font-weight: bold; 
+      font-size: 11px;
+    }
     .legend .예약가능 { background-color: #51cf66; color: white; }
     .legend .입금대기 { background-color: #339af0; color: white; }
     .legend .예약완료 { background-color: #ff6b6b; color: white; }
-    .admin-area { display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .admin-btn { padding: 6px 10px; background: #495057; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; }
-    .bank-info { font-size: 12px; font-weight: bold; color: #2b8a3e; background: #e6fcf5; padding: 6px 10px; border: 1px solid #b2f2bb; border-radius: 6px; width: 100%; }
-    .month-header { display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: bold; margin: 10px 0; background: white; padding: 8px 12px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .nav-btn { background: #f1f3f5; border: 1px solid #ced4da; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; }
+
+    .admin-area { 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .admin-btn { 
+      padding: 6px 10px; 
+      background: #495057; 
+      color: white; 
+      border: none;
+      border-radius: 6px; 
+      cursor: pointer;
+      font-weight: bold; 
+      font-size: 12px;
+    }
+    .bank-info {
+      font-size: 12px; 
+      font-weight: bold;
+      color: #2b8a3e; 
+      background: #e6fcf5;
+      padding: 6px 10px;
+      border: 1px solid #b2f2bb;
+      border-radius: 6px; 
+      width: 100%; 
+    }
+
+    .month-header {
+      display: flex;
+       justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 10px 0;
+      background: white; 
+      padding: 8px 12px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .nav-btn { 
+       background: #f1f3f5;
+       border: 1px solid #ced4da; 
+       padding: 6px 12px;
+       border-radius: 4px;
+       cursor: pointer;
+       font-weight: bold; 
+       font-size: 13px;
+     }
+
+    /* 달력 테이블 모바일 최적화 */
     table { border-collapse: collapse; width: 100%; table-layout: fixed; background: white; box-shadow: 0 2px 6px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; }
     th { background: #f1f3f5; padding: 6px 2px; border: 1px solid #dee2e6; font-size: 12px; }
-    td { border: 1px solid #dee2e6; height: 105px; vertical-align: top; padding: 2px; overflow: hidden; }
+    td { 
+      border: 1px solid #dee2e6; 
+      height: 105px; 
+      vertical-align: top; 
+      padding: 2px;
+      overflow: hidden; 
+    }
     .date-num { font-weight: bold; margin-bottom: 2px; cursor: pointer; color: #333; font-size: 12px; text-align: center; background: #f8f9fa; border-radius: 3px; padding: 1px 0; }
-    .room { margin-top: 2px; padding: 2px 3px; border-radius: 3px; font-size: 10px; display: flex; justify-content: space-between; align-items: center; line-height: 1.2; }
+    .date-num:hover { color: #339af0; }
+
+    .room { 
+      margin-top: 2px; 
+      padding: 2px 3px;  
+      border-radius: 3px; 
+      font-size: 10px; 
+      display: flex;
+      justify-content: space-between; 
+      align-items: center; 
+      line-height: 1.2; 
+    }
     .room span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .available { background: #e6fcf5; border: 1px solid #b2f2bb; color: #2b8a3e; }
     .pending { background: #e7f5ff; border: 1px solid #a5d8ff; color: #1864ab; }
     .complete { background: #fff5f5; border: 1px solid #ffc9c9; color: #c92a2a; }
-    .btn { font-size: 9px; padding: 1px 4px; border: none; border-radius: 3px; cursor: pointer; flex-shrink: 0; }
+    
+    .btn { 
+      font-size: 9px; 
+      padding: 1px 4px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer; 
+      flex-shrink: 0;
+    }
     .reserve-btn { background: #2b8a3e; color: white; }
     .confirm-btn { background: #1864ab; color: white; }
     .cancel-btn { background: #495057; color: white; }
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
-    .modal-content { background-color: white; padding: 20px; border-radius: 12px; width: 100%; max-width: 340px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+
+    /* 모달 모바일 최적화 */
+    .modal {
+      display: none; 
+      position: fixed; 
+      top: 0; left: 0; 
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center; 
+      z-index: 1000; 
+      padding: 20px;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 340px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
     .modal-content h3 { margin-top: 0; margin-bottom: 10px; font-size: 16px; }
-    .modal-content input, .modal-content select { width: 100%; padding: 10px; margin: 5px 0; box-sizing: border-box; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; }
+    .modal-content input,
+    .modal-content select {
+      width: 100%; 
+      padding: 10px;
+      margin: 5px 0; 
+      box-sizing: border-box;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      font-size: 14px;
+    }
     .modal-actions { display: flex; gap: 8px; margin-top: 10px; }
     .modal-actions button { flex: 1; padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; }
     .btn-submit { background: #339af0; color: white; }
     .btn-close { background: #adb5bd; color: white; }
+
+    /* 화면 폭이 넓은 PC 환경용 조율 */
     @media (min-width: 600px) {
       body { padding: 20px; }
       .header-bar { flex-direction: row; justify-content: space-between; }
@@ -242,17 +349,20 @@
         alert("저장 중 오류가 발생했습니다.");
       }
 
+      // 모바일 연동 문자 전송 (010-3308-9696)
       const adminPhone = "01033089696";
       const smsMessage = `[펜션 예약 신청]\n- 날짜: ${selectedDate}\n- 예약자: ${name}\n- 객실: ${selectedRoom}호 (${nights}박)\n- 연락처: ${phone}\n- 인원: ${count}명\n- 바비큐: ${bbq}`;
 
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+     
       if (isMobile) {
         const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
         const smsUrl = `sms:${adminPhone}${isIOS ? '&' : '?'}body=${encodeURIComponent(smsMessage)}`;
-        alert("예약이 정상적으로 저장되었습니다!\n확인을 누르시면 관리자(010-3308-9696) 문자 창으로 이동합니다.");
+       
+        alert("예약 신청 정보가 등록되었습니다!\n확인을 누르시면 관리자(010-3308-9696) 문자 창으로 이동합니다.");
         window.location.href = smsUrl;
       } else {
-        alert("예약이 저장되었습니다. (010-3308-9696으로 연락 부탁드립니다.)");
+        alert("예약이 신청되었습니다. (010-3308-9696으로 연락 부탁드립니다.)");
       }
     }
 
