@@ -9,50 +9,153 @@
     body { font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; padding: 10px; margin: 0; background-color: #f8f9fa; }
     
     .header-bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+    
     .legend { display: flex; gap: 6px; justify-content: flex-start; }
-    .legend span { display: inline-block; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; }
+    .legend span {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 11px;
+    }
     .legend .예약완료 { background-color: #ff6b6b; color: white; }
     .legend .입금대기 { background-color: #339af0; color: white; }
     .legend .예약가능 { background-color: #51cf66; color: white; }
     
-    .admin-area { display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .admin-btn { padding: 6px 10px; background: #495057; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; }
-    .bank-info { font-size: 12px; font-weight: bold; color: #2b8a3e; background: #e6fcf5; padding: 6px 10px; border: 1px solid #b2f2bb; border-radius: 6px; width: 100%; }
+    .admin-area {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .admin-btn {
+      padding: 6px 10px;
+      background: #495057;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 12px;
+    }
+    .bank-info {
+      font-size: 12px;
+      font-weight: bold;
+      color: #2b8a3e;
+      background: #e6fcf5;
+      padding: 6px 10px;
+      border: 1px solid #b2f2bb;
+      border-radius: 6px;
+      width: 100%;
+    }
 
-    .month-header { display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: bold; margin: 10px 0; background: white; padding: 8px 12px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .nav-btn { background: #f1f3f5; border: 1px solid #ced4da; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; }
+    .month-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 10px 0;
+      background: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .nav-btn {
+      background: #f1f3f5;
+      border: 1px solid #ced4da;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 13px;
+    }
 
+    /* 달력 테이블 모바일 최적화 */
     table { border-collapse: collapse; width: 100%; table-layout: fixed; background: white; box-shadow: 0 2px 6px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; }
     th { background: #f1f3f5; padding: 6px 2px; border: 1px solid #dee2e6; font-size: 12px; }
-    td { border: 1px solid #dee2e6; height: 105px; vertical-align: top; padding: 2px; overflow: hidden; }
+    td {
+      border: 1px solid #dee2e6;
+      height: 105px;
+      vertical-align: top;
+      padding: 2px;
+      overflow: hidden;
+    }
     
-    td.past-day { background-color: #f1f3f5; opacity: 0.6; }
+    /* 지난 날짜 스타일 */
+    td.past-day {
+      background-color: #f1f3f5;
+      opacity: 0.6;
+    }
+    
     .date-num { font-weight: bold; margin-bottom: 2px; cursor: pointer; color: #333; font-size: 12px; text-align: center; background: #f8f9fa; border-radius: 3px; padding: 1px 0; }
     .date-num:hover { color: #339af0; }
     .past-date-num { color: #adb5bd !important; cursor: default; }
     
-    .room { margin-top: 2px; padding: 2px 3px; border-radius: 3px; font-size: 10px; display: flex; justify-content: space-between; align-items: center; line-height: 1.2; }
+    .room {
+      margin-top: 2px;
+      padding: 2px 3px;
+      border-radius: 3px;
+      font-size: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      line-height: 1.2;
+    }
     .room span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .available { background: #e6fcf5; border: 1px solid #b2f2bb; color: #2b8a3e; }
     .pending { background: #e7f5ff; border: 1px solid #a5d8ff; color: #1864ab; }
     .complete { background: #fff5f5; border: 1px solid #ffc9c9; color: #c92a2a; }
     .disabled-room { background: #e9ecef; border: 1px solid #dee2e6; color: #adb5bd; }
     
-    .btn { font-size: 9px; padding: 1px 4px; border: none; border-radius: 3px; cursor: pointer; flex-shrink: 0; }
+    .btn {
+      font-size: 9px;
+      padding: 1px 4px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
     .reserve-btn { background: #2b8a3e; color: white; }
     .confirm-btn { background: #1864ab; color: white; }
     .cancel-btn { background: #495057; color: white; }
 
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
-    .modal-content { background-color: white; padding: 20px; border-radius: 12px; width: 100%; max-width: 340px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    /* 모달 모바일 최적화 */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 340px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
     .modal-content h3 { margin-top: 0; margin-bottom: 10px; font-size: 16px; }
-    .modal-content input, .modal-content select { width: 100%; padding: 10px; margin: 5px 0; box-sizing: border-box; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; }
+    .modal-content input,
+    .modal-content select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      box-sizing: border-box;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      font-size: 14px;
+    }
     .modal-actions { display: flex; gap: 8px; margin-top: 10px; }
     .modal-actions button { flex: 1; padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; }
     .btn-submit { background: #339af0; color: white; }
     .btn-close { background: #adb5bd; color: white; }
-    
-    #loadingOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.7); z-index: 2000; justify-content: center; align-items: center; font-weight: bold; font-size: 16px; color: #333; }
 
     @media (min-width: 600px) {
       body { padding: 20px; }
@@ -67,14 +170,13 @@
 </head>
 <body>
 
-  <div id="loadingOverlay">구글 시트 데이터 처리 중...</div>
-
   <div class="header-bar">
     <div class="legend">
       <span class="예약가능">가능</span>
       <span class="입금대기">대기</span>
       <span class="예약완료">완료</span>
     </div>
+    
     <div class="admin-area">
       <button class="admin-btn" onclick="loginAdmin()">🔐 관리자 로그인</button>
       <div class="bank-info">🏦 농협 351-0323-3855-63 (육현자)</div>
@@ -117,71 +219,29 @@
   </div>
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbztUIuTMjF2u02tyZfrz1lU_lc_pkcaD40HGPQO1kx1K5OBL7mfyET9wfHJvSh6gbyqEg/exec";
-
     const rooms = ["강", "산", "들", "별"];
-    const roomCapacity = { "강": 5, "산": 5, "들": 5, "별": 3 };
-    let bookings = {};
+    const roomCapacity = {
+      "강": 5,
+      "산": 5,
+      "들": 5,
+      "별": 3
+    };
+
+    const bookings = {};
     let isAdmin = false;
     
+    // 오늘 날짜 계산 (시/분/초 제외)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
     const currentYear = today.getFullYear();
     const currentMonth = today.getMonth();
+
     let viewYear = currentYear;
     let viewMonth = currentMonth;
     
     let selectedDate = null;
     let selectedRoom = null;
-
-    function showLoading(show) {
-      document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
-    }
-
-    // 1번 해결: 백엔드에서 포맷팅된 YYYY-MM-DD 날짜를 오차 없이 직접 매핑
-    async function fetchBookings() {
-      showLoading(true);
-      try {
-        const response = await fetch(GOOGLE_SCRIPT_URL);
-        const data = await response.json();
-        
-        bookings = {};
-        data.forEach(item => {
-          if (!item.date) return;
-          
-          // GS 백엔드에서 전달받은 string 그대로 사용 (T00:00:00 등의 문자열 자르기 보정 포함)
-          let dateStr = String(item.date).split('T')[0].trim();
-          
-          if (!bookings[dateStr]) bookings[dateStr] = [];
-          bookings[dateStr].push({
-            room: String(item.room),
-            name: item.name,
-            count: item.count,
-            phone: item.phone,
-            bbq: item.bbq,
-            nights: item.nights,
-            status: item.status
-          });
-        });
-        generateCalendar(viewYear, viewMonth);
-      } catch (err) {
-        console.error("데이터 로드 실패:", err);
-      } finally {
-        showLoading(false);
-      }
-    }
-
-    // 2번 해결: CORS 차단을 우회하기 위한 POST 요청 공통 함수
-    async function postToGoogleScript(payload) {
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" }, // CORS preflight 회피
-        body: JSON.stringify(payload),
-        redirect: "follow" // 구글 리다이렉트 자동 추적
-      });
-      return await response.json();
-    }
 
     function loginAdmin() {
       const pwd = prompt("관리자 비밀번호를 입력하세요:");
@@ -195,7 +255,8 @@
     }
 
     function showBookingList(dateStr, isPast) {
-      if (isPast && !isAdmin) return;
+      if (isPast && !isAdmin) return; // 지난 날짜는 일반 사용자 클릭 불가능
+
       const list = bookings[dateStr];
       if (!list || list.length === 0) {
         alert(`${dateStr}일에는 아직 예약 내역이 없습니다.`);
@@ -208,9 +269,13 @@
     function prevMonth() {
       let targetMonth = viewMonth - 1;
       let targetYear = viewYear;
-      if (targetMonth < 0) { targetMonth = 11; targetYear--; }
+      if (targetMonth < 0) {
+        targetMonth = 11;
+        targetYear--;
+      }
 
       const isPast = (targetYear < currentYear) || (targetYear === currentYear && targetMonth < currentMonth);
+
       if (isPast && !isAdmin) {
         alert("지난 달 달력은 관리자만 조회가 가능합니다.");
         return;
@@ -234,6 +299,7 @@
 
       document.getElementById("modalInfo").innerText = `${date} [${room}번 방] (최대 ${maxCap}인)`;
       document.getElementById("guestName").value = "";
+      
       const countInput = document.getElementById("guestCount");
       countInput.value = "";
       countInput.max = maxCap;
@@ -251,7 +317,7 @@
       }
     }
 
-    async function submitReservation() {
+    function submitReservation() {
       const name = document.getElementById("guestName").value.trim();
       const count = parseInt(document.getElementById("guestCount").value, 10);
       const phone = document.getElementById("guestPhone").value.trim();
@@ -263,87 +329,86 @@
         alert("모든 예약 정보를 입력해 주세요.");
         return;
       }
-      if (count < 1 || count > maxCap) {
-        alert(`인원은 1명 이상 최대 ${maxCap}인까지 입력 가능합니다.`);
+
+      if (count < 1) {
+        alert("최소 1명 이상 입력해 주세요.");
         return;
       }
 
-      // 연박 중복 체크
+      if (count > maxCap) {
+        alert(`${selectedRoom}번 방은 최대 ${maxCap}인까지 예약 가능합니다.`);
+        return;
+      }
+
+      // 연박 간 중복 예약 검증
       for (let i = 0; i < nights; i++) {
-        const parts = selectedDate.split('-');
-        const d = new Date(parts[0], parts[1] - 1, parts[2]);
+        const d = new Date(selectedDate);
         d.setDate(d.getDate() + i);
         const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        
         if (bookings[dateStr]?.some(b => b.room === selectedRoom)) {
           alert(`${dateStr} 날짜의 ${selectedRoom}방은 이미 예약이 존재합니다.`);
           return;
         }
       }
 
-      const newBookings = [];
+      // 연박 예약 등록
       for (let i = 0; i < nights; i++) {
-        const parts = selectedDate.split('-');
-        const d = new Date(parts[0], parts[1] - 1, parts[2]);
+        const d = new Date(selectedDate);
         d.setDate(d.getDate() + i);
         const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-        newBookings.push({ date: dateStr, room: selectedRoom, name, count, phone, bbq, nights, status: "입금대기" });
-      }
-
-      showLoading(true);
-      try {
-        await postToGoogleScript({ action: "create", bookings: newBookings });
-
-        document.getElementById("reservationModal").style.display = "none";
-        await fetchBookings();
-
-        const adminPhone = "01033089696";
-        const smsMessage = `[펜션 예약 신청]\n- 날짜: ${selectedDate}\n- 예약자: ${name}\n- 객실: ${selectedRoom}호 (${nights}박)\n- 연락처: ${phone}\n- 인원: ${count}명\n- 바비큐: ${bbq}`;
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         
-        if (isMobile) {
-          const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-          window.location.href = `sms:${adminPhone}${isIOS ? '&' : '?'}body=${encodeURIComponent(smsMessage)}`;
-        } else {
-          alert("예약 신청이 성공적으로 구글 시트에 등록되었습니다!");
-        }
-      } catch (err) {
-        alert("예약 저장 중 오류가 발생했습니다.");
-        console.error(err);
-      } finally {
-        showLoading(false);
+        if (!bookings[dateStr]) bookings[dateStr] = [];
+        bookings[dateStr].push({ room: selectedRoom, name, count, phone, bbq, nights, status: "입금대기" });
+      }
+
+      document.getElementById("reservationModal").style.display = "none";
+      generateCalendar(viewYear, viewMonth);
+
+      // 모바일 연동 문자 전송
+      const adminPhone = "01033089696";
+      const smsMessage = `[펜션 예약 신청]\n- 날짜: ${selectedDate}\n- 예약자: ${name}\n- 객실: ${selectedRoom}호 (${nights}박)\n- 연락처: ${phone}\n- 인원: ${count}명 (최대 ${maxCap}인)\n- 바비큐: ${bbq}`;
+
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const smsUrl = `sms:${adminPhone}${isIOS ? '&' : '?'}body=${encodeURIComponent(smsMessage)}`;
+        
+        alert("예약 신청 정보가 등록되었습니다!\n확인을 누르시면 관리자(010-3308-9696) 문자 창으로 연결됩니다.");
+        window.location.href = smsUrl;
+      } else {
+        alert("예약이 신청되었습니다. (010-3308-9696으로 연락 부탁드립니다.)");
       }
     }
 
-    async function cancelBooking(date, room) {
+    function cancelBooking(date, room) {
       const booking = bookings[date]?.find(b => b.room === room);
-      if (!booking || !confirm(`${booking.name}님의 예약을 취소하시겠습니까?`)) return;
+      if (!booking) return;
+      if (!confirm(`${booking.name}님의 예약을 취소하시겠습니까?`)) return;
 
-      showLoading(true);
-      try {
-        await postToGoogleScript({ action: "delete", name: booking.name, room: room });
-        await fetchBookings();
-        alert("예약이 취소되었습니다.");
-      } catch (err) {
-        alert("취소 처리 중 오류가 발생했습니다.");
-      } finally {
-        showLoading(false);
+      const targetName = booking.name;
+      for (const day in bookings) {
+        bookings[day] = bookings[day].filter(b => !(b.name === targetName && b.room === room));
       }
+      alert("예약이 취소되었습니다.");
+      generateCalendar(viewYear, viewMonth);
     }
 
-    async function confirmBooking(date, room) {
+    function confirmBooking(date, room) {
       const booking = bookings[date]?.find(b => b.room === room);
       if (!booking) return;
 
-      showLoading(true);
-      try {
-        await postToGoogleScript({ action: "updateStatus", name: booking.name, room: room });
-        await fetchBookings();
-        alert("예약이 확정(예약완료)되었습니다.");
-      } catch (err) {
-        alert("확정 처리 중 오류가 발생했습니다.");
-      } finally {
-        showLoading(false);
+      const targetName = booking.name;
+      for (const day in bookings) {
+        bookings[day].forEach(b => {
+          if (b.name === targetName && b.room === room) {
+            b.status = "예약완료";
+          }
+        });
       }
+      alert("예약이 확정되었습니다.");
+      generateCalendar(viewYear, viewMonth);
     }
 
     function generateCalendar(year, month) {
@@ -364,7 +429,7 @@
             html += "<td></td>";
           } else {
             const currentDateObj = new Date(year, month, date);
-            const isPast = currentDateObj < today;
+            const isPast = currentDateObj < today; // 지난 날짜 여부 확인
             const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(date).padStart(2, "0")}`;
 
             const tdClass = isPast ? 'class="past-day"' : '';
@@ -392,14 +457,26 @@
                 }
                 html += `</div>`;
               } else {
+                // 지난 날짜인 경우
                 if (isPast) {
                   if (isAdmin) {
-                    html += `<div class="room available"><span><b>${room}</b></span><button class="btn reserve-btn" onclick="openModal('${dateStr}', '${room}')">예약</button></div>`;
+                    // 관리자는 지난 날짜도 예약 가능
+                    html += `<div class="room available">`;
+                    html += `<span><b>${room}</b></span>`;
+                    html += `<button class="btn reserve-btn" onclick="openModal('${dateStr}', '${room}')">예약</button>`;
+                    html += `</div>`;
                   } else {
-                    html += `<div class="room disabled-room"><span><b>${room}</b> 마감</span></div>`;
+                    // 일반 사용자는 지난 날짜 비활성화
+                    html += `<div class="room disabled-room">`;
+                    html += `<span><b>${room}</b> 마감</span>`;
+                    html += `</div>`;
                   }
                 } else {
-                  html += `<div class="room available"><span><b>${room}</b></span><button class="btn reserve-btn" onclick="openModal('${dateStr}', '${room}')">예약</button></div>`;
+                  // 오늘 포함 이후 날짜
+                  html += `<div class="room available">`;
+                  html += `<span><b>${room}</b></span>`;
+                  html += `<button class="btn reserve-btn" onclick="openModal('${dateStr}', '${room}')">예약</button>`;
+                  html += `</div>`;
                 }
               }
             });
@@ -415,7 +492,8 @@
       document.getElementById("calendar").innerHTML = html;
     }
 
-    fetchBookings();
+    // 초기 달력 생성
+    generateCalendar(viewYear, viewMonth);
   </script>
 </body>
 </html>
