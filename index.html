@@ -17,7 +17,7 @@
     
     .admin-area { display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; }
     .admin-btn { padding: 6px 10px; background: #495057; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; }
-    .logout-btn { background: #e03131; } /* 로그아웃 버튼용 빨간색 포인트 */
+    .logout-btn { background: #e03131; }
     .bank-info { font-size: 12px; font-weight: bold; color: #2b8a3e; background: #e6fcf5; padding: 6px 10px; border: 1px solid #b2f2bb; border-radius: 6px; width: 100%; }
 
     .month-header { display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: bold; margin: 10px 0; background: white; padding: 8px 12px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
@@ -77,7 +77,6 @@
       <span class="예약완료">완료</span>
     </div>
     <div class="admin-area">
-      <!-- 동적으로 버튼 내용이 변경되는 관리자 버튼 -->
       <button id="adminBtn" class="admin-btn" onclick="toggleAdmin()">🔐 관리자 로그인</button>
       <div class="bank-info">🏦 농협 351-0323-3855-63 (육현자)</div>
     </div>
@@ -137,6 +136,13 @@
     let selectedDate = null;
     let selectedRoom = null;
 
+    function formatDate(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const d = String(dateObj.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
     function showLoading(show) {
       document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
     }
@@ -151,7 +157,7 @@
         data.forEach(item => {
           if (!item.date) return;
           const d = new Date(item.date);
-          const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+          const dateStr = formatDate(d);
           
           if (!bookings[dateStr]) bookings[dateStr] = [];
           bookings[dateStr].push({
@@ -172,7 +178,6 @@
       }
     }
 
-    // 관리자 로그인/로그아웃 스위칭 함수
     function toggleAdmin() {
       if (!isAdmin) {
         loginAdmin();
@@ -202,7 +207,6 @@
       }
     }
 
-    // 관리자 상태에 따라 버튼 형태 및 스타일 업데이트
     function updateAdminButton() {
       const btn = document.getElementById("adminBtn");
       if (isAdmin) {
@@ -271,6 +275,7 @@
       }
     }
 
+    // 예약 신청 함수 (새로고침 없이 실시간 반영 수정 완료)
     async function submitReservation() {
       const name = document.getElementById("guestName").value.trim();
       const count = parseInt(document.getElementById("guestCount").value, 10);
@@ -288,33 +293,55 @@
         return;
       }
 
-      for (let i = 0; i < nights; i++) {
-        const d = new Date(selectedDate);
-        d.setDate(d.getDate() + i);
-        const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-        if (bookings[dateStr]?.some(b => b.room === selectedRoom)) {
-          alert(`${dateStr} 날짜의 ${selectedRoom}방은 이미 예약이 존재합니다.`);
-          return;
-        }
-      }
+      const startDateParts = selectedDate.split("-");
+      const startYear = parseInt(startDateParts[0], 10);
+      const startMonth = parseInt(startDateParts[1], 10) - 1;
+      const startDay = parseInt(startDateParts[2], 10);
 
       const newBookings = [];
       for (let i = 0; i < nights; i++) {
-        const d = new Date(selectedDate);
-        d.setDate(d.getDate() + i);
-        const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-        newBookings.push({ date: dateStr, room: selectedRoom, name, count, phone, bbq, nights, status: "입금대기" });
+        const d = new Date(startYear, startMonth, startDay + i);
+        const dateStr = formatDate(d);
+
+        if (bookings[dateStr]?.some(b => b.room === selectedRoom)) {
+          alert(`${dateStr} 날짜의 ${selectedRoom}번 방은 이미 예약이 존재합니다.`);
+          return;
+        }
+
+        newBookings.push({
+          date: dateStr,
+          room: selectedRoom,
+          name: name,
+          count: count,
+          phone: phone,
+          bbq: bbq,
+          nights: nights,
+          status: "입금대기"
+        });
       }
 
       showLoading(true);
       try {
         await fetch(GOOGLE_SCRIPT_URL, {
           method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({ action: "create", bookings: newBookings })
         });
 
+        // 1) 화면 메모리에 먼저 즉시 추가 (핵심)
+        newBookings.forEach(b => {
+          if (!bookings[b.date]) bookings[b.date] = [];
+          bookings[b.date].push(b);
+        });
+
+        // 2) 팝업 창을 닫고 새로고침 없이 화면 달력을 즉시 업데이트
         document.getElementById("reservationModal").style.display = "none";
-        await fetchBookings();
+        generateCalendar(viewYear, viewMonth);
+
+        // 3) 구글 시트 반영 지연을 고려해 2초 후 시트 데이터 최종 재검증
+        setTimeout(async () => {
+          await fetchBookings();
+        }, 2000);
 
         const adminPhone = "01033089696";
         const smsMessage = `[펜션 예약 신청]\n- 날짜: ${selectedDate}\n- 예약자: ${name}\n- 객실: ${selectedRoom}호 (${nights}박)\n- 연락처: ${phone}\n- 인원: ${count}명\n- 바비큐: ${bbq}`;
@@ -324,7 +351,7 @@
           const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
           window.location.href = `sms:${adminPhone}${isIOS ? '&' : '?'}body=${encodeURIComponent(smsMessage)}`;
         } else {
-          alert("예약 신청이 성공적으로 구글 시트에 등록되었습니다!");
+          alert("예약 신청이 성공적으로 등록되었습니다!");
         }
       } catch (err) {
         alert("예약 저장 중 오류가 발생했습니다.");
@@ -342,9 +369,18 @@
       try {
         await fetch(GOOGLE_SCRIPT_URL, {
           method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({ action: "delete", name: booking.name, room: room })
         });
-        await fetchBookings();
+
+        // 로컬 데이터에서도 삭제 후 즉시 화면 업데이트
+        bookings[date] = bookings[date].filter(b => b.room !== room);
+        generateCalendar(viewYear, viewMonth);
+
+        setTimeout(async () => {
+          await fetchBookings();
+        }, 2000);
+
         alert("예약이 취소되었습니다.");
       } catch (err) {
         alert("취소 처리 중 오류가 발생했습니다.");
@@ -361,9 +397,18 @@
       try {
         await fetch(GOOGLE_SCRIPT_URL, {
           method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({ action: "updateStatus", name: booking.name, room: room })
         });
-        await fetchBookings();
+
+        // 즉시 예약완료 상태 변경 후 화면 업데이트
+        booking.status = "예약완료";
+        generateCalendar(viewYear, viewMonth);
+
+        setTimeout(async () => {
+          await fetchBookings();
+        }, 2000);
+
         alert("예약이 확정(예약완료)되었습니다.");
       } catch (err) {
         alert("확정 처리 중 오류가 발생했습니다.");
@@ -391,7 +436,7 @@
           } else {
             const currentDateObj = new Date(year, month, date);
             const isPast = currentDateObj < today;
-            const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(date).padStart(2, "0")}`;
+            const dateStr = formatDate(currentDateObj);
 
             const tdClass = isPast ? 'class="past-day"' : '';
             const numClass = isPast ? 'date-num past-date-num' : 'date-num';
